@@ -1,26 +1,27 @@
 <div #home xmlns="http://www.w3.org/1999/html">
-  <mat-grid-list cols="3" rowHeight="4:3">
-    <mat-grid-tile [style.background]="'#C9253C'">Phileo
-      
-      <mat-grid-tile-footer>We can display the counter here</mat-grid-tile-footer>
+
+  <mat-slide-toggle
+    id="old-new-toggle"
+    [(ngModel)]="old_new_checked">New Experience</mat-slide-toggle>
+
+  <mat-grid-list [class.new]="old_new_checked" cols="3" rowHeight="4:3" gutterSize="4px">
+    <mat-grid-tile *ngFor="let house of houses" [style.background]="house.color" [class.new]="old_new_checked">
+      <div class="house-score-flex" [class.new]="old_new_checked">
+        <p class="house-name">{{house.name}}</p>
+        <p class="house-score" *ngIf="old_new_checked">{{house.score}}</p>
+      </div>
+
+      <mat-grid-tile-footer *ngIf="!old_new_checked">Score: {{house.score}}</mat-grid-tile-footer>
     </mat-grid-tile>
 
-    <mat-grid-tile [style.background]="'#135D32'">Chara
-      <mat-grid-tile-footer>We can display the counter here</mat-grid-tile-footer>
+    <mat-grid-tile [class.new]="old_new_checked">
+      <div *ngIf="!old_new_checked">
+        We can write something here or something
+      </div>
+      <div *ngIf="old_new_checked" id="leaderboard-container">
+        <h1>Leaderboard</h1>
+        <p *ngFor="let house of houses_sorted()"><span *ngIf="is_highest_score(house.score)">🏆 </span>{{house.name}}: {{house.score}} Points</p>
+      </div>
     </mat-grid-tile>
-
-    <mat-grid-tile [style.background]="'#E39935'">Gratia
-      <mat-grid-tile-footer>We can display the counter here</mat-grid-tile-footer>
-    </mat-grid-tile>
-
-    <mat-grid-tile [style.background]="'#154D89'">Veritas
-      <mat-grid-tile-footer>We can display the counter here</mat-grid-tile-footer>
-    </mat-grid-tile>
-
-    <mat-grid-tile [style.background]="'#5E5E5C'">Aequitas
-      <mat-grid-tile-footer>We can display the counter here</mat-grid-tile-footer>
-    </mat-grid-tile>
-
-    <mat-grid-tile>We can right something here or something</mat-grid-tile>
   </mat-grid-list>
 </div>
